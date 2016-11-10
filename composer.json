@@ -1,0 +1,13 @@
+{
+    "name": "finance/main",
+    "description": "Working with financial series",
+    "type": "project",
+    "license": "Alexandr Ivanov, 2016",
+    "authors": [
+        {
+            "name": "Alexandr Ivanov",
+            "email": "alexandr2194@gmail.com"
+        }
+    ],
+    "require": {}
+}
