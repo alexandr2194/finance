@@ -33,7 +33,7 @@ class Daemon
         }
         $this->sleep = $sleep;
         pcntl_signal(SIGTERM, [$this, 'signalHandler']);
-        file_put_contents($file, getmypid());
+        file_put_contents(dirname(__FILE__) . $file, getmypid());
     }
 
     /**
@@ -75,8 +75,10 @@ class Daemon
         while (!$this->stop) {
             do {
                 $resp = $func();
+                echo $resp;
                 if (!empty($resp)) {
-                    file_put_contents('tmp/text.txt',$resp);
+                    $file = fopen(dirname(__FILE__) . '/tmp/text.txt','a+');
+                    fwrite($file, $resp . PHP_EOL);
                     break;
                 }
             } while (true);

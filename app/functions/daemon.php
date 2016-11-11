@@ -8,7 +8,11 @@
 
 namespace Finance\YahooFinance;
 use Finance\Application\Daemon;
-include (__DIR__ . 'PrepareResponse.php');
+
+include (__DIR__ . '/../process/Daemon.php');
+include (__DIR__ . '/PrepareResponse.php');
+include (__DIR__ . '/FinancialData.php');
+
 
 
 $child_pid = pcntl_fork();
@@ -27,13 +31,4 @@ $function = function () use ($response) {
 };
 
 $daemon = new Daemon();
-
-fclose(STDIN);
-fclose(STDOUT);
-fclose(STDERR);
-
-$STDIN = fopen('/dev/null', 'r');
-$STDOUT = fopen('/dev/null', 'wb');
-$STDERR = fopen('/dev/null', 'wb');
-
 $daemon->run($function);
