@@ -14,6 +14,5 @@ $app = require_once __DIR__ . '/../app/application.php';
 $app->run();
 $eurUsd = new prepareResponse("EURUSD");
 $financialData = $eurUsd->sendRequest();
-while (1) {
-    echo $financialData->getBid() . "<br>";
-}
+echo $financialData->getBid() . "<br>";
+

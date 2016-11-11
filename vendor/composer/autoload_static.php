@@ -6,21 +6,7 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit23914cf482c68dce8eb6e724a522a394
 {
-    public static $files = array (
-        'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
-    );
-
     public static $prefixLengthsPsr4 = array (
-        'R' => 
-        array (
-            'React\\Promise\\' => 14,
-        ),
-        'G' => 
-        array (
-            'GuzzleHttp\\Stream\\' => 18,
-            'GuzzleHttp\\Ring\\' => 16,
-            'GuzzleHttp\\' => 11,
-        ),
         'F' => 
         array (
             'Finance\\YahooFinance\\' => 21,
@@ -29,22 +15,6 @@ class ComposerStaticInit23914cf482c68dce8eb6e724a522a394
     );
 
     public static $prefixDirsPsr4 = array (
-        'React\\Promise\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/react/promise/src',
-        ),
-        'GuzzleHttp\\Stream\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/guzzlehttp/streams/src',
-        ),
-        'GuzzleHttp\\Ring\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/guzzlehttp/ringphp/src',
-        ),
-        'GuzzleHttp\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
-        ),
         'Finance\\YahooFinance\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app/functions',
