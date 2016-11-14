@@ -47,6 +47,14 @@ class Neuron
         $this->initWeight();
     }
 
+    /**
+     *
+     */
+    public function init()
+    {
+        $this->initWeight();
+    }
+
     public function go()
     {
         if ($this->limitCheck($this->summingBlock())) {
