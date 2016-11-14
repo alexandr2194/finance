@@ -14,7 +14,8 @@
     {
         "psr-4": {
             "Finance\\Application\\": "app",
-            "Finance\\YahooFinance\\": "app/functions"
+            "Finance\\YahooFinance\\": "app/functions",
+            "Finance\\NeuralNetwork\\": "app/neuralNetwork"
         }
     }
 }

@@ -10,6 +10,7 @@ class ComposerStaticInit23914cf482c68dce8eb6e724a522a394
         'F' => 
         array (
             'Finance\\YahooFinance\\' => 21,
+            'Finance\\NeuralNetwork\\' => 22,
             'Finance\\Application\\' => 20,
         ),
     );
@@ -18,6 +19,10 @@ class ComposerStaticInit23914cf482c68dce8eb6e724a522a394
         'Finance\\YahooFinance\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app/functions',
+        ),
+        'Finance\\NeuralNetwork\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/neuralNetwork',
         ),
         'Finance\\Application\\' => 
         array (

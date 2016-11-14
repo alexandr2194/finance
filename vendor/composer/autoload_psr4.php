@@ -7,5 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Finance\\YahooFinance\\' => array($baseDir . '/app/functions'),
+    'Finance\\NeuralNetwork\\' => array($baseDir . '/app/neuralNetwork'),
     'Finance\\Application\\' => array($baseDir . '/app'),
 );

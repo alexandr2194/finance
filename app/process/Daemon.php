@@ -18,14 +18,14 @@ class Daemon
     /**
      * @var int
      */
-    protected $sleep = 1;
+    protected $sleep = 2;
 
     /**
      * Daemon constructor.
      * @param string $file
      * @param int $sleep
      */
-    public function __construct($file = '/tmp/daemon.pid', $sleep = 1)
+    public function __construct($file = '/tmp/daemon.pid', $sleep = 2)
     {
         if ($this->isDaemonActive($file)) {
             echo "Daemon is already exsist!\n";

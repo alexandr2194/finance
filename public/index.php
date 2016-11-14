@@ -15,4 +15,3 @@ $app->run();
 $eurUsd = new prepareResponse("EURUSD");
 $financialData = $eurUsd->sendRequest();
 echo $financialData->getBid() . "<br>";
-
