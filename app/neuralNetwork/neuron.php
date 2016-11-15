@@ -10,6 +10,7 @@ class Neuron
     const ID = 'id';
     const LAYER_TYPE = 'type';
 
+    public static $currentID = 0;
     /**
      * @var int
      */
@@ -33,15 +34,16 @@ class Neuron
      * @param int $id
      * @param string $layerType
      */
-    public function __construct(int $id, string $layerType)
+    public function __construct(string $layerType)
     {
-        $this->id = $id;
+        $this->id = self::$currentID;
         $this->layerType = $layerType;
+        self::$currentID++;
     }
 
     public static function buildNeuron(array $params):self
     {
-        return new self($params[self::ID], $params[self::LAYER_TYPE]);
+        return new self($params[self::LAYER_TYPE]);
     }
 
     public function go()

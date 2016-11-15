@@ -1,11 +1,11 @@
 {
   "input": {
-    "neuronCount": 4
+    "neuronCount": 1
   },
   "hidden": {
-    "neuronCount": 5
+    "neuronCount": 2
   },
   "output": {
-    "neuronCount": 2
+    "neuronCount": 3
   }
 }

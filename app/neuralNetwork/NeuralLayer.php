@@ -36,7 +36,6 @@ class NeuralLayer
     {
         for ($i = 0; $i < $count; $i++) {
             $this->neurons[] = Neuron::buildNeuron([
-                Neuron::ID => $i,
                 Neuron::LAYER_TYPE => $this->type]);
         }
     }
