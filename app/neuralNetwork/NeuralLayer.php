@@ -25,8 +25,8 @@ class NeuralLayer
      */
     public function __construct(int $neuronCount, string $type)
     {
-        $this->createNeurons($neuronCount);
         $this->type = $type;
+        $this->createNeurons($neuronCount);
     }
 
     /**
@@ -35,7 +35,9 @@ class NeuralLayer
     private function createNeurons(int $count)
     {
         for ($i = 0; $i < $count; $i++) {
-            $this->neurons[] = Neuron::buildNeuron([Neuron::ID => $i]);
+            $this->neurons[] = Neuron::buildNeuron([
+                Neuron::ID => $i,
+                Neuron::LAYER_TYPE => $this->type]);
         }
     }
 
@@ -54,5 +56,13 @@ class NeuralLayer
     public function getNeurons(): array
     {
         return $this->neurons;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
     }
 }

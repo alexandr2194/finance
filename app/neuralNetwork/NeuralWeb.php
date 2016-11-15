@@ -2,7 +2,7 @@
 
 namespace Finance\NeuralNetwork;
 
-class NeuralNetwork
+class NeuralWeb
 {
     const NEURON_LAYERS_COUNT = 'neuronLayersCount';
 
@@ -39,6 +39,45 @@ class NeuralNetwork
     }
 
     /**
+     * @return NeuralWeb
+     */
+    public static function buildNeuralWeb():self
+    {
+        return new self();
+    }
+
+    /**
+     * @return NeuralLink[]
+     */
+    public function getNeuronLinks(): array
+    {
+        return $this->neuronLinks;
+    }
+
+    /**
+     * @return NeuralLayer[]
+     */
+    public function getNeuronLayers(): array
+    {
+        return $this->neuronLayers;
+    }
+
+    /**
+     * @param Neuron $neuron
+     * @return NeuralLink[]
+     */
+    public function getInputLinksTo(Neuron $neuron):array
+    {
+        $result = array();
+        foreach ($this->neuronLinks as $link) {
+            if ($link->isCurrentNeuronInputLink($neuron)) {
+                $result[] = $link;
+            }
+        }
+        return $result;
+    }
+
+    /**
      * @param string $pathToConfig
      * @return array
      */
@@ -46,14 +85,6 @@ class NeuralNetwork
     {
         $this->assertExistsFile($pathToConfig);
         return json_decode(file_get_contents(dirname(__FILE__) . $pathToConfig), true);
-    }
-
-    /**
-     * @return NeuralNetwork
-     */
-    public static function buildNeuralNetwork():self
-    {
-        return new self();
     }
 
     /**

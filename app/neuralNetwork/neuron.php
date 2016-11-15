@@ -8,12 +8,16 @@ class Neuron
 {
     const ACCEPTANCE_THRESHOLD = "0.7";
     const ID = 'id';
+    const LAYER_TYPE = 'type';
 
     /**
      * @var int
      */
     private $id;
-
+    /**
+     * @var string
+     */
+    private $layerType;
     /**
      * @var
      */
@@ -27,15 +31,17 @@ class Neuron
     /**
      * neuron constructor.
      * @param int $id
+     * @param string $layerType
      */
-    public function __construct(int $id)
+    public function __construct(int $id, string $layerType)
     {
         $this->id = $id;
+        $this->layerType = $layerType;
     }
 
     public static function buildNeuron(array $params):self
     {
-        return new self($params[self::ID]);
+        return new self($params[self::ID], $params[self::LAYER_TYPE]);
     }
 
     public function go()
@@ -103,5 +109,13 @@ class Neuron
     private function getInputCount():int
     {
         return count($this->inputLinks);
+    }
+
+    /**
+     * @return string
+     */
+    public function getLayerType(): string
+    {
+        return $this->layerType;
     }
 }
