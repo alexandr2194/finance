@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: aleksandr.i
- * Date: 14.11.16
- * Time: 11:02
- */
-
 namespace Finance\NeuralNetwork;
 
 
@@ -14,28 +7,22 @@ use Exception;
 class Neuron
 {
     const ACCEPTANCE_THRESHOLD = "0.7";
-
-    //TODO
-    const REJECTION_THRESHOLD = "0.3";
+    const ID = 'id';
 
     /**
      * @var int
      */
     private $id;
-    /**
-     * @var array
-     */
-    private $inputs;
-
-    /**
-     * @var array
-     */
-    private $weights;
 
     /**
      * @var
      */
     private $output;
+
+    /**
+     * @var NeuralLink[]
+     */
+    private $inputLinks;
 
     /**
      * neuron constructor.
@@ -44,15 +31,11 @@ class Neuron
     public function __construct(int $id)
     {
         $this->id = $id;
-        $this->initWeight();
     }
 
-    /**
-     *
-     */
-    public function init()
+    public static function buildNeuron(array $params):self
     {
-        $this->initWeight();
+        return new self($params[self::ID]);
     }
 
     public function go()
@@ -62,33 +45,6 @@ class Neuron
         } else {
             $this->output = 0;
         }
-    }
-
-
-    /**
-     * @param Neuron[] $neurons
-     */
-    public function transferTo(array $neurons)
-    {
-        foreach ($neurons as $neuron) {
-            $neuron->receiveInput($this->inputs);
-        }
-    }
-
-    /**
-     * @param $inputs
-     */
-    public function receiveInput($inputs)
-    {
-        $this->inputs = $inputs;
-    }
-
-    /**
-     * @param Neuron $neuron
-     */
-    public function connectWith(Neuron $neuron)
-    {
-        $inputs[] = $neuron->getId();
     }
 
     /**
@@ -113,10 +69,8 @@ class Neuron
     private function summingBlock():float
     {
         $sum = 0;
-        foreach ($this->inputs as $input) {
-            foreach ($this->weights as $weight) {
-                $sum += $input * $weight;
-            }
+        foreach ($this->inputLinks as $link) {
+            $sum += $link->getFromNeuron()->getOutput() * $link->getWeight();
         }
         return $sum / $this->getInputCount();
     }
@@ -144,35 +98,10 @@ class Neuron
     }
 
     /**
-     *
-     */
-    private function initWeight()
-    {
-        for ($i = 0; $i < $this->getInputCount(); $i++) {
-            $this->weights[$i] = rand(0, 50);
-        }
-    }
-
-    /**
      * @return int
      */
     private function getInputCount():int
     {
-        return count($this->inputs);
-    }
-
-    /**
-     * @param Neuron $neuron
-     * @param int $offset
-     * @throws Exception
-     */
-    public function changeWeightInput(Neuron $neuron, int $offset)
-    {
-        foreach ($this->inputs as $input => $key) {
-            if ($input == $neuron->getId()) {
-                $this->weights[$key] += $offset;
-            }
-        }
-        throw new Exception("Neurons %s and %s not associated!", $this->id, $neuron->getId());
+        return count($this->inputLinks);
     }
 }

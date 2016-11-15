@@ -1,74 +1,114 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: aleksandr.i
- * Date: 14.11.16
- * Time: 15:48
- */
 
 namespace Finance\NeuralNetwork;
 
-
 class NeuralNetwork
 {
+    const NEURON_LAYERS_COUNT = 'neuronLayersCount';
+
     /**
-     * @var NeuralLayer
+     * @var NeuralLayer[]
      */
     private $neuronLayers;
 
     /**
-     * @var int
+     * @var NeuralLink[]
      */
-    private $neuronLayersCount;
+    private $neuronLinks;
 
     /**
      * NeuralNetwork constructor.
-     * @param int $neuronLayersCount
      */
-    public function __construct(int $neuronLayersCount)
+    public function __construct()
     {
-        $this->neuronLayersCount = $neuronLayersCount;
+        $params = $this->loadConfig();
+        $this->createLayers($params);
+        $this->createLinks();
     }
 
-    public function setInputLayer(int $neuronCount)
-    {
-
-    }
-}
-
-
-class NeuralLayer
-{
     /**
-     * @var Neuron[]
+     * @param array $params
      */
-    private $neurons;
-
-    private $neuronCount;
+    public function createLayers(array $params)
+    {
+        foreach ($params as $type => $param) {
+            if ($this->checkLayerType($type)) {
+                $this->addLayer($param[NeuralLayer::NEURON_COUNT], $type);
+            }
+        }
+    }
 
     /**
-     * NeuralLayer constructor.
+     * @param string $pathToConfig
+     * @return array
+     */
+    private function loadConfig(string $pathToConfig = '/config/params.json'):array
+    {
+        $this->assertExistsFile($pathToConfig);
+        return json_decode(file_get_contents(dirname(__FILE__) . $pathToConfig), true);
+    }
+
+    /**
+     * @return NeuralNetwork
+     */
+    public static function buildNeuralNetwork():self
+    {
+        return new self();
+    }
+
+    /**
      * @param int $neuronCount
+     * @param string $type
      */
-    public function __construct(int $neuronCount)
+    private function addLayer(int $neuronCount, string $type)
     {
-        $this->neuronCount = $neuronCount;
+        $this->neuronLayers[] = NeuralLayer::buildLayer([
+            NeuralLayer::NEURON_COUNT => $neuronCount,
+            NeuralLayer::TYPE => $type
+        ]);
     }
 
-    public function createNeuron($id)
+    /**
+     * @param $type
+     * @return bool
+     */
+    private function checkLayerType($type):bool
     {
-        $neuron = new Neuron($id);
-        $neuron->init();
-        $this->neurons[] = $neuron;
-    }
-}
-
-class inputLayer extends NeuralLayer
-{
-    public function __construct($neuronCount)
-    {
-        parent::__construct($neuronCount);
+        return in_array($type, [NeuralLayer::INPUT, NeuralLayer::OUTPUT, NeuralLayer::HIDDEN]);
     }
 
+    /**
+     * @param $pathToConfig
+     * @throws \Exception
+     */
+    private function assertExistsFile($pathToConfig)
+    {
+        if (!file_exists(dirname(__FILE__) . $pathToConfig)) {
+            throw new \Exception("Config file not found");
+        }
+    }
 
+    private function createLinks()
+    {
+        for ($i = 0; $i < count($this->neuronLayers) - 1; $i++) {
+            foreach ($this->neuronLayers[$i]->getNeurons() as $firstLayerNeuron) {
+                foreach ($this->neuronLayers[$i + 1]->getNeurons() as $secondLayerNeuron) {
+                    $this->addLink($firstLayerNeuron, $secondLayerNeuron);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param $firstLayerNeuron
+     * @param $secondLayerNeuron
+     */
+    private function addLink($firstLayerNeuron, $secondLayerNeuron)
+    {
+        $this->neuronLinks[] = NeuralLink::buildLink([
+            NeuralLink::NEURON_FROM => $firstLayerNeuron,
+            NeuralLink::NEURON_TO => $secondLayerNeuron,
+            NeuralLink::WEIGHT => rand(0, 20)
+        ]);
+    }
 }
