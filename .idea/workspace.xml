@@ -108,8 +108,8 @@
       <file leaf-file-name="daemon.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Finance/Application/YahooFinance/daemon.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="110">
-              <caret line="5" column="39" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="39" />
+            <state relative-caret-position="242">
+              <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
               <folding>
                 <element signature="e#52#101#0#PHP" expanded="true" />
                 <marker date="1479338289947" expanded="true" signature="812:932" ph="INSERT INTO `financeTime`... " />
@@ -462,12 +462,12 @@
       <option name="presentableId" value="Default" />
       <updated>1479311723759</updated>
       <workItem from="1479311725162" duration="18967000" />
-      <workItem from="1479333238570" duration="5286000" />
+      <workItem from="1479333238570" duration="5519000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24253000" />
+    <option name="totallyTimeSpent" value="24486000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1924" height="1050" extended-state="0" />
@@ -874,8 +874,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Finance/Application/YahooFinance/daemon.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="5" column="39" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="39" />
+        <state relative-caret-position="242">
+          <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
           <folding>
             <element signature="e#52#101#0#PHP" expanded="true" />
             <marker date="1479338289947" expanded="true" signature="812:932" ph="INSERT INTO `financeTime`... " />
