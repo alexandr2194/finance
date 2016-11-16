@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="MySQL - finance@127.0.0.1">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="2.6">
+    <schema id="1" name="finance">
+      <visible>1</visible>
+    </schema>
+    <schema id="2" name="information_schema"/>
+    <schema id="3" name="mysql"/>
+    <schema id="4" name="performance_schema"/>
+    <schema id="5" name="sys"/>
+    <table id="6" parent="1" name="financeTime"/>
+    <column id="7" parent="6" name="start_time">
+      <mandatory>1</mandatory>
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="8" parent="6" name="end_time">
+      <mandatory>1</mandatory>
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="9" parent="6" name="bid">
+      <mandatory>1</mandatory>
+      <data-type>float|0</data-type>
+    </column>
+    <column id="10" parent="6" name="ask">
+      <mandatory>1</mandatory>
+      <data-type>float|0</data-type>
+    </column>
+    <key id="11" parent="6" name="PRIMARY">
+      <columns>end_time
+start_time</columns>
+      <primary>1</primary>
+    </key>
+  </database-model>
+</dataSource>
