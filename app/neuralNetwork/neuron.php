@@ -41,6 +41,10 @@ class Neuron
         self::$currentID++;
     }
 
+    /**
+     * @param array $params
+     * @return Neuron
+     */
     public static function buildNeuron(array $params):self
     {
         return new self($params[self::LAYER_TYPE]);
@@ -48,11 +52,19 @@ class Neuron
 
     public function go()
     {
-        if ($this->limitCheck($this->summingBlock())) {
+        $sum = $this->summingBlock();
+        if ($this->limitCheck($sum)) {
             $this->output = 1;
         } else {
             $this->output = 0;
         }
+    }
+
+
+    public function transferInputToOutput()
+    {
+        $this->assertInputLayer();
+        $this->output = $this->inputLinks[0];
     }
 
     /**
@@ -99,7 +111,8 @@ class Neuron
      */
     private function limitCheck(int $sum):bool
     {
-        if ($this->activateFunction($sum) > self::ACCEPTANCE_THRESHOLD) {
+        $activate = $this->activateFunction($sum);
+        if ($activate > self::ACCEPTANCE_THRESHOLD) {
             return true;
         }
         return false;
@@ -119,5 +132,12 @@ class Neuron
     public function getLayerType(): string
     {
         return $this->layerType;
+    }
+
+    private function assertInputLayer():void
+    {
+        if (count($this->inputLinks) != 1) {
+            throw new Exception("Не может быть больше 1 входа у input layer!");
+        }
     }
 }
