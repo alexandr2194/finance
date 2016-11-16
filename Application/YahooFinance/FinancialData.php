@@ -1,17 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: aleksandr.i
- * Date: 11.11.16
- * Time: 13:40
- */
 
-namespace Finance\YahooFinance;
-
+namespace Finance\Application\YahooFinance;
 
 class FinancialData
 {
-
     const DIGITS = 'digits';
     const ASK = 'ask';
     const BID = 'bid';
@@ -73,7 +65,8 @@ class FinancialData
         string $symbol,
         int $lastTime,
         float $change24h
-    ) {
+    )
+    {
 
         $this->digits = $digits;
         $this->ask = $ask;

@@ -6,7 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Finance\\YahooFinance\\' => array($baseDir . '/app/functions'),
-    'Finance\\NeuralNetwork\\' => array($baseDir . '/app/neuralNetwork'),
-    'Finance\\Application\\' => array($baseDir . '/app'),
+    'Finance\\Application\\YahooFinance\\' => array($baseDir . '/Application/YahooFinance'),
+    'Finance\\Application\\Process\\' => array($baseDir . '/Application/Process'),
+    'Finance\\Application\\NeuralWeb\\' => array($baseDir . '/Application/NeuralWeb'),
+    'Finance\\Application\\DataBase\\' => array($baseDir . '/Application/Database'),
+    'Finance\\Application\\' => array($baseDir . '/Application'),
 );

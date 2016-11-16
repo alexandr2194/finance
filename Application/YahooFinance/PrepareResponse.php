@@ -1,14 +1,8 @@
 <?php
-namespace Finance\YahooFinance;
+namespace Finance\Application\YahooFinance;
 
 use Exception;
 
-/**
- * Created by PhpStorm.
- * User: aleksandr.i
- * Date: 11.11.16
- * Time: 13:09
- */
 class PrepareResponse
 {
     const YAHOO_URL = 'https://quotes.instaforex.com/api/quotesTick?m=json&q=';

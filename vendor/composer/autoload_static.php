@@ -4,37 +4,47 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit23914cf482c68dce8eb6e724a522a394
+class ComposerStaticInitfc05df7227d21c42c99cad3afbdda385
 {
     public static $prefixLengthsPsr4 = array (
         'F' => 
         array (
-            'Finance\\YahooFinance\\' => 21,
-            'Finance\\NeuralNetwork\\' => 22,
+            'Finance\\Application\\YahooFinance\\' => 33,
+            'Finance\\Application\\Process\\' => 28,
+            'Finance\\Application\\NeuralWeb\\' => 30,
+            'Finance\\Application\\DataBase\\' => 29,
             'Finance\\Application\\' => 20,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Finance\\YahooFinance\\' => 
+        'Finance\\Application\\YahooFinance\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/app/functions',
+            0 => __DIR__ . '/../..' . '/Application/YahooFinance',
         ),
-        'Finance\\NeuralNetwork\\' => 
+        'Finance\\Application\\Process\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/app/neuralNetwork',
+            0 => __DIR__ . '/../..' . '/Application/Process',
+        ),
+        'Finance\\Application\\NeuralWeb\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Application/NeuralWeb',
+        ),
+        'Finance\\Application\\DataBase\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Application/Database',
         ),
         'Finance\\Application\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/app',
+            0 => __DIR__ . '/../..' . '/Application',
         ),
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit23914cf482c68dce8eb6e724a522a394::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit23914cf482c68dce8eb6e724a522a394::$prefixDirsPsr4;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitfc05df7227d21c42c99cad3afbdda385::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitfc05df7227d21c42c99cad3afbdda385::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }

@@ -1,16 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: aleksandr.i
- * Date: 10.11.16
- * Time: 13:37
- */
 
 namespace Finance\Application;
 
 use Exception;
 
-class app
+class App
 {
     /**
      * @var array
@@ -38,7 +32,7 @@ class app
     private function assertExistsConfigFile()
     {
         if (!file_exists(dirname(__FILE__) . "/config/config.json")) {
-            throw new Exception("Configuration file not found! Please check availability \"config.json\" file in the \"Project\\app\\config\" directory");
+            throw new Exception("Configuration file not found! Please check availability \"config.json\" file in the \"Project\\Application\\config\" directory");
         }
     }
 

@@ -1,8 +1,6 @@
 <?php
-namespace Finance\NeuralNetwork;
 
-
-use Exception;
+namespace Finance\Application\NeuralWeb;
 
 class Neuron
 {

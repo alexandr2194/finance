@@ -1,21 +1,23 @@
 {
-    "name": "finance/main",
-    "description": "Working with financial series",
-    "type": "project",
-    "license": "Alexandr Ivanov, 2016",
-    "authors": [
-        {
-            "name": "Alexandr Ivanov",
-            "email": "alexandr2194@gmail.com"
-        }
-    ],
-    "require": {},
-    "autoload":
+  "name": "finance/main",
+  "description": "Working with financial series",
+  "type": "project",
+  "license": "Alexandr Ivanov, 2016",
+  "authors": [
     {
-        "psr-4": {
-            "Finance\\Application\\": "app",
-            "Finance\\YahooFinance\\": "app/functions",
-            "Finance\\NeuralNetwork\\": "app/neuralNetwork"
-        }
+      "name": "Alexandr Ivanov",
+      "email": "alexandr2194@gmail.com"
     }
+  ],
+  "require": {},
+  "autoload":
+  {
+    "psr-4": {
+      "Finance\\Application\\": "Application/",
+      "Finance\\Application\\YahooFinance\\": "Application/YahooFinance/",
+      "Finance\\Application\\NeuralWeb\\": "Application/NeuralWeb/",
+      "Finance\\Application\\DataBase\\": "Application/Database/",
+      "Finance\\Application\\Process\\": "Application/Process/"
+    }
+  }
 }

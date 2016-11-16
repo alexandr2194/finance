@@ -1,6 +1,6 @@
 <?php
-namespace Finance\NeuralNetwork;
 
+namespace Finance\Application\NeuralWeb;
 
 class NeuralLink
 {

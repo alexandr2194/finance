@@ -1,12 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: aleksandr.i
- * Date: 11.11.16
- * Time: 15:28
- */
 
-namespace Finance\Application;
+namespace Finance\Application\Process;
+
+use Exception;
 
 class Daemon
 {
@@ -25,21 +21,18 @@ class Daemon
      * @param string $file
      * @param int $sleep
      */
-    public function __construct($file = '/tmp/daemon.pid', $sleep = 2)
+    public function __construct($file = '/tmp/daemon.pid', $sleep = 1)
     {
-        if ($this->isDaemonActive($file)) {
-            echo "Daemon is already exsist!\n";
-            exit(0);
-        }
+        $this->assertExistsDaemon($file);
         $this->sleep = $sleep;
         pcntl_signal(SIGTERM, [$this, 'signalHandler']);
-        file_put_contents(dirname(__FILE__) . $file, getmypid());
+        $this->savePID($file);
     }
 
     /**
-     * @param $signal
+     * @param string $signal
      */
-    public function signalHandler($signal)
+    public function signalHandler(string $signal)
     {
         switch ($signal) {
             case SIGTERM:
@@ -49,10 +42,11 @@ class Daemon
     }
 
     /**
-     * @param $pid_file
+     * @param string $pid_file
      * @return bool
+     * @throws Exception
      */
-    public function isDaemonActive($pid_file)
+    public function isDaemonActive(string $pid_file):bool
     {
         if (is_file($pid_file)) {
             $pid = file_get_contents($pid_file);
@@ -60,7 +54,7 @@ class Daemon
                 return true;
             } else {
                 if (!unlink($pid_file)) {
-                    exit(-1);
+                    throw new Exception("Error!");
                 }
             }
         }
@@ -75,15 +69,31 @@ class Daemon
         while (!$this->stop) {
             do {
                 $resp = $func();
-                echo $resp;
                 if (!empty($resp)) {
-                    $file = fopen(dirname(__FILE__) . '/tmp/text.txt','a+');
-                    fwrite($file, $resp . PHP_EOL);
                     break;
                 }
             } while (true);
             sleep($this->sleep);
         }
+    }
+
+    /**
+     * @param $file
+     * @throws Exception
+     */
+    private function assertExistsDaemon($file)
+    {
+        if ($this->isDaemonActive($file)) {
+            throw new Exception("Daemon is already exsist!");
+        }
+    }
+
+    /**
+     * @param $file
+     */
+    private function savePID($file)
+    {
+        file_put_contents(dirname(__FILE__) . $file, getmypid());
     }
 
 }
