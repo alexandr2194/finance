@@ -1,28 +1,33 @@
-<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8"/>
-    <title>Siple Web-Socket Client</title>
-    <script type="text/javascript" src="socket.js"></script>
-</head>
-<body>
-<br/><br/>
-Server address:
-<input id="sock-addr" type="text" value="ws://192.168.7.7:8889"><br/>
-Message:
-<input id="sock-msg" type="text">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>WebSocket test page</title>
+    </head>
+    <body onload="create();">
+        <script type="text/javascript" src="smoothie.js"></script>
+        <script type="text/javascript">
 
-<input id="sock-send-butt" type="button" value="send">
-<br/>
-<br/>
-<input id="sock-recon-butt" type="button" value="reconnect"><input id="sock-disc-butt" type="button" value="disconnect">
-<br/>
-<br/>
-<canvas id="mycanvas" width="400" height="100"></canvas>
+            function create() {
+                var chart = new SmoothieChart(),
+                        canvas = document.getElementById('smoothie-chart'),
+                        series = new TimeSeries();
+                chart.streamTo(canvas, 1000);
+                chart.addTimeSeries(series, {lineWidth:2.1,strokeStyle:'#00ff00'});
 
-<br/>
-Полученные сообщения от веб-сокета:
-<div id="sock-info" style="border: 1px solid"></div>
 
-</body>
+                ws = new WebSocket('ws://'+document.domain+':8889/');
+                ws.onopen = function () {document.getElementById('log').innerHTML += "WebSocket opened <br/>";};
+                ws.onmessage = function (e) {series.append(new Date().getTime(),parseFloat(e.data));};
+                ws.onclose = function () {document.getElementById('log').innerHTML += 'WebSocket closed <br/>';}
+            }
+        </script>
+    <button onclick="create();">Create WebSocket</button>
+    <button onclick="ws.send('ping');">Send ping</button>
+    <button onclick="ws.close();">Close WebSocket</button>
+    <br />
+
+    <div id="log" style="width:300px; height: 300px; border: 1px solid #999999; overflow:auto;"></div>
+
+    <canvas id="smoothie-chart" width="625" height="425"></canvas>
+    </body>
 </html>

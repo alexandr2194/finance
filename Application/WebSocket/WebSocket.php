@@ -297,9 +297,9 @@ class WebSocket
     {
         $eurUsd = new prepareResponse("EURUSD");
 
-        while(true) {
+        while (true) {
             $financialData = $eurUsd->sendRequest();
-            fwrite($connect, $this->encode(strval($financialData->getBid())));
+            fwrite($connect, $this->encode(strval($financialData->getBid()) . strval(rand(0, 9))));
         }
     }
 
