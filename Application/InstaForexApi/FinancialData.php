@@ -1,6 +1,6 @@
 <?php
 
-namespace Finance\Application\YahooFinance;
+namespace Finance\Application\InstaForexApi;
 
 class FinancialData
 {

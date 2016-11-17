@@ -14,10 +14,11 @@
   {
     "psr-4": {
       "Finance\\Application\\": "Application/",
-      "Finance\\Application\\YahooFinance\\": "Application/YahooFinance/",
+      "Finance\\Application\\InstaForexApi\\": "Application/InstaForexApi/",
       "Finance\\Application\\NeuralWeb\\": "Application/NeuralWeb/",
       "Finance\\Application\\DataBase\\": "Application/Database/",
-      "Finance\\Application\\Process\\": "Application/Process/"
+      "Finance\\Application\\Process\\": "Application/Process/",
+      "Finance\\Application\\WebSocket\\": "Application/WebSocket/"
     }
   }
 }

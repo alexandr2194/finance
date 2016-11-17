@@ -9,7 +9,7 @@ class ComposerStaticInitfc05df7227d21c42c99cad3afbdda385
     public static $prefixLengthsPsr4 = array (
         'F' => 
         array (
-            'Finance\\Application\\YahooFinance\\' => 33,
+            'Finance\\Application\\InstaForexApi\\' => 33,
             'Finance\\Application\\Process\\' => 28,
             'Finance\\Application\\NeuralWeb\\' => 30,
             'Finance\\Application\\DataBase\\' => 29,
@@ -18,9 +18,9 @@ class ComposerStaticInitfc05df7227d21c42c99cad3afbdda385
     );
 
     public static $prefixDirsPsr4 = array (
-        'Finance\\Application\\YahooFinance\\' => 
+        'Finance\\Application\\InstaForexApi\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/Application/YahooFinance',
+            0 => __DIR__ . '/../..',
         ),
         'Finance\\Application\\Process\\' => 
         array (

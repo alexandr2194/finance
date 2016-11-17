@@ -1,7 +1,8 @@
 <?php
 
 use Finance\Application\Database\FinanceDataBase;
-use Finance\Application\YahooFinance\PrepareResponse;
+use Finance\Application\InstaForexApi\PrepareResponse;
+use Finance\Application\WebSocket\WebSocket;
 
 ini_set("display_errors", true);
 include(dirname(dirname(__FILE__)) . '/vendor/autoload.php');
@@ -11,44 +12,9 @@ $app->run();
 
 $eurUsd = new prepareResponse("EURUSD");
 $financialData = $eurUsd->sendRequest();
-echo $financialData->getBid() . "<br>";
-echo "Последние изменения цен: " . date("d.m.Y   H:i:s", $financialData->getLastTime()) . "<br>";
-echo "Сейчас: " . date("d.m.Y   H:i:s", strtotime('+2 hours',time())) . "<br>";
-echo "Сейчас: " . date("d.m.Y   H:i:s", strtotime('+2 hours -1 sec',time())) . "<br>";
+echo $financialData->getBid() . "  ask: " .$financialData->getAsk(). "<br>";
 
-
-$response = new PrepareResponse("EURUSD");
-
-//Prepare first record
-$firstBid = $response->sendRequest()->getBid();
-$firstAsk = $response->sendRequest()->getAsk();
-$firstTimeStart = date("Y-m-d H:i:s", strtotime('+2 hours - 1 sec', time()));
-$firstTimeEnd = date("Y-m-d H:i:s", strtotime('+2 hours', time()));
-
-
-/**
- * @param $timeDB
- * @param $firstTimeStart
- * @param $firstTimeEnd
- * @param $firstBid
- * @param $firstAsk
- */
-function insertRow(FinanceDataBase $timeDB, $firstTimeStart, $firstTimeEnd, $firstBid, $firstAsk)
-{
-    $timeDB->makeQuery(
-        "INSERT INTO `financeTime` VALUES ('" . $firstTimeStart . "','" . $firstTimeEnd . "'," . $firstBid . "," . $firstAsk . ")"
-    );
-}
-$timeDB = new FinanceDataBase();
-insertRow(
-    $timeDB,
-    $firstTimeStart,
-    $firstTimeEnd,
-    $firstBid,
-    $firstAsk
-);
-
-
+echo phpinfo();
 /*$NeuralWeb = NeuralWeb::buildNeuralWeb();
 foreach ($NeuralWeb->getNeuronLayers() as $layer) {
     echo "Layer type: " . $layer->getType() . "<br>";
@@ -60,14 +26,3 @@ foreach ($NeuralWeb->getNeuronLayers() as $layer) {
     }
 }
 */
-
-
-/**
- * @param mixed $value
- */
-function var_dump_ex($value)
-{
-    echo "<pre>";
-    echo var_dump($value);
-    echo "</pre>";
-}

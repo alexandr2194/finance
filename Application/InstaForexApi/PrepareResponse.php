@@ -1,11 +1,11 @@
 <?php
-namespace Finance\Application\YahooFinance;
+namespace Finance\Application\InstaForexApi;
 
 use Exception;
 
 class PrepareResponse
 {
-    const YAHOO_URL = 'https://quotes.instaforex.com/api/quotesTick?m=json&q=';
+    const FOREX_URL = 'https://quotes.instaforex.com/api/quotesTick?m=json&q=';
     const ERROR = 'error';
     /**
      * @var string
@@ -37,7 +37,7 @@ class PrepareResponse
     private function buildRequest():string
     {
         $this->assertNotEmptySymbol();
-        return self::YAHOO_URL . $this->symbol;
+        return self::FOREX_URL . $this->symbol;
     }
 
     /**

@@ -1,11 +1,12 @@
 <?php
 
-namespace Finance\Application\YahooFinance;
+namespace Finance\Application\InstaForexApi;
 
 use Finance\Application\Database\FinanceDataBase;
 use Finance\Application\Process\Daemon;
 
-$timeDB = new FinanceDataBase();
+include(dirname(dirname(dirname(__FILE__))) . '/vendor/autoload.php');
+
 $child_pid = pcntl_fork();
 if ($child_pid) {
     exit(0);
@@ -20,41 +21,23 @@ $firstAsk = $response->sendRequest()->getAsk();
 $firstTimeStart = date("Y-m-d H:i:s", strtotime('+2 hours - 1 sec', time()));
 $firstTimeEnd = date("Y-m-d H:i:s", strtotime('+2 hours', time()));
 
-/**
- * @param $timeDB
- * @param $firstTimeStart
- * @param $firstTimeEnd
- * @param $firstBid
- * @param $firstAsk
- */
-function insertRow(FinanceDataBase $timeDB, $firstTimeStart, $firstTimeEnd, $firstBid, $firstAsk)
-{
-    $timeDB->makeQuery(
-        "INSERT INTO `financeTime` VALUES ('" . $firstTimeStart . "','" . $firstTimeEnd . "'," . $firstBid . "," . $firstAsk . ")"
-    );
-}
 
-insertRow(
-    $timeDB,
-    $firstTimeStart,
-    $firstTimeEnd,
-    $firstBid,
-    $firstAsk
+$timeDB = new FinanceDataBase();
+$timeDB->makeQuery(
+    "INSERT INTO `financeTime` VALUES ('" . $firstTimeStart . "','" . $firstTimeEnd . "'," . $firstBid . "," . $firstAsk . ")"
 );
+
 sleep(1);//ждем секунду
 $function = function () use ($response, $timeDB) {
     $financialData = $response->sendRequest();
-    $nowDate = date("Y-m-d H:i:s", strtotime('+2 hours', time()));
     $previousRow = $timeDB->getOneRow(
         "SELECT * FROM financeTime WHERE end_time = (SELECT MAX(end_time) FROM financeTime)"
     );
-    insertRow(
-        $timeDB,
-        $previousRow['end_time'],
-        $nowDate,
-        $financialData->getBid(),
-        $financialData->getAsk()
-    );
+    if ((floatval($previousRow['bid']) + floatval($previousRow['ask'])) != (floatval($financialData->getBid()) + floatval($financialData->getAsk()))) {
+        $timeDB->makeQuery(
+            "INSERT INTO `financeTime` VALUES ('" . $previousRow['end_time'] . "','" . date("Y-m-d H:i:s", strtotime('+2 hours', time())) . "'," . $financialData->getBid() . "," . $financialData->getAsk() . ")"
+        );
+    }
 };
 
 $daemon = new Daemon();

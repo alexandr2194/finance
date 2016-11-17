@@ -35,7 +35,6 @@ class FinanceDataBase
             $this->port
         );
         $this->assertSuccessConnection();
-
     }
 
     /**
@@ -49,21 +48,24 @@ class FinanceDataBase
 
     /**
      * @param string $query
-     * @return mixed
+     * @return array
      */
-    public function getOneRow(string $query)
+    public function getOneRow(string $query):array
     {
-        return $this->mysqli->query($query)->fetch_assoc();
+        $result = array();
+        if ($this->mysqli->query($query)->num_rows) {
+            $result = $this->mysqli->query($query)->fetch_assoc();
+        }
+        return $result;
     }
 
 
     /**
      * @param string $query
-     * @return bool
      */
-    public function makeQuery(string $query):bool
+    public function makeQuery(string $query)
     {
-        return $this->mysqli->query($query);
+        $this->mysqli->query($query);
     }
 
     /**

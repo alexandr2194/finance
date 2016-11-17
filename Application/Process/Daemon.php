@@ -14,7 +14,7 @@ class Daemon
     /**
      * @var int
      */
-    protected $sleep = 2;
+    protected $sleep = 1;
 
     /**
      * Daemon constructor.

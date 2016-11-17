@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Siple Web-Socket Client</title>
+    <script type="text/javascript" src="socket.js"></script>
+</head>
+<body>
+<br/><br/>
+Server address:
+<input id="sock-addr" type="text" value="ws://192.168.7.7:8889"><br/>
+Message:
+<input id="sock-msg" type="text">
+
+<input id="sock-send-butt" type="button" value="send">
+<br/>
+<br/>
+<input id="sock-recon-butt" type="button" value="reconnect"><input id="sock-disc-butt" type="button" value="disconnect">
+<br/>
+<br/>
+<canvas id="mycanvas" width="400" height="100"></canvas>
+
+<br/>
+Полученные сообщения от веб-сокета:
+<div id="sock-info" style="border: 1px solid"></div>
+
+</body>
+</html>
