@@ -36,7 +36,7 @@ class WebSocket
      * @param string $ip
      * @param int $port
      */
-    public function __construct(string $ip = '192.168.7.7', int $port = 8889)
+    public function __construct(string $ip = 'localhost', int $port = 8889)
     {
         $this->startTime = round(microtime(true), 2);
         $this->ip = $ip;
@@ -50,37 +50,29 @@ class WebSocket
             $read = $this->connects;
             $read[] = $this->socket;
             $write = $except = null;
-            if (!stream_select($read, $write, $except, null)) {
-                break;
-            }
 
-            if (in_array($this->socket, $read)) {
-                $connect = stream_socket_accept($this->socket, -1);
-                $this->handshake($connect);
-                $this->connects[] = $connect;
-                $this->onOpen($connect);
+            if (stream_select($read, $write, $except, 1)) {
 
-                unset($read[array_search($this->socket, $read)]);
-            }
+                if (in_array($this->socket, $read)) {
+                    $connect = stream_socket_accept($this->socket, -1);
+                    $this->handshake($connect);
+                    $this->connects[] = $connect;
+                    $this->onOpen($connect);
 
-            foreach ($read as $connect) {
-                $data = fread($connect, 100000);
-
-                if (!$data) {
-                    fclose($connect);
-                    unset($this->connects[array_search($connect, $this->connects)]);
-                    continue;
+                    unset($read[array_search($this->socket, $read)]);
                 }
-                $this->onMessage($connect, $data);
+                $this->sendCurrency($read);
+                echo __LINE__, PHP_EOL;
 
-
-                $this->sendMessage($connect);
-            }
-
-            if ((round(microtime(true), 2) - $this->startTime) > 100) {
-                fclose($this->socket);
-                $t = new WebSocket();
-                $t->start();
+                if ((round(microtime(true), 2) - $this->startTime) > 100) {
+                    fclose($this->socket);
+                    $t = new WebSocket();
+                    $t->start();
+                }
+            } else {
+                echo __LINE__, PHP_EOL;
+                var_dump($this->socket);
+                //$this->sendMessage($this->socket);
             }
         }
         fclose($this->socket);
@@ -207,6 +199,10 @@ class WebSocket
         return $frame;
     }
 
+    /**
+     * @param $data
+     * @return array|bool
+     */
     private function decode($data)
     {
         $unmaskedPayload = '';
@@ -288,26 +284,26 @@ class WebSocket
     }
 
 
+    /**
+     * @param $connect
+     */
     private function onOpen($connect)
     {
-        fwrite($connect, $this->encode('Привет, ee'));
+        fwrite($connect, $this->encode('Connected'));
     }
 
+    /**
+     * @param $connect
+     */
     public function sendMessage($connect)
     {
         $eurUsd = new prepareResponse("EURUSD");
 
-        while (true) {
-            $financialData = $eurUsd->sendRequest();
-            fwrite($connect, $this->encode(strval($financialData->getBid()) . strval(rand(0, 9))));
-        }
+        $financialData = $eurUsd->sendRequest();
+        echo strval($financialData->getBid()) . strval(rand(0, 9));
+        fwrite($connect, $this->encode(strval($financialData->getBid()) . strval(rand(0, 9))));
     }
 
-    private function onMessage($connect, $data)
-    {
-        $f = $this->decode($data);
-        fwrite($connect, $this->encode($f['payload']));
-    }
 
     private function initSocket()
     {
@@ -327,6 +323,28 @@ class WebSocket
     {
         if (!$socket) {
             throw new Exception("Socket unavailable!");
+        }
+    }
+
+    /**
+     * @param $read
+     */
+    private function sendCurrency($read)
+    {
+        foreach ($read as $connect) {
+            $data = fread($connect, 100000);
+            //echo var_dump($this->decode($data));
+            if ($this->decode($data)['payload'] == 'close' || $this->decode($data)['type'] == 'close') {
+                fclose($connect);
+                unset($this->connects[array_search($connect, $this->connects)]);
+                continue;
+            }
+            $this->sendMessage($connect);
+            if (!$data) {
+                fclose($connect);
+                unset($this->connects[array_search($connect, $this->connects)]);
+                continue;
+            }
         }
     }
 }

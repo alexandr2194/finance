@@ -8,7 +8,15 @@
         <script type="text/javascript">
 
             function create() {
-                var chart = new SmoothieChart(),
+                var chart = new SmoothieChart(
+                        {
+                            millisPerPixel:20,
+                            maxValueScale:1.4,
+                            interpolation:'linear',
+                            scaleSmoothing:0.779,
+                            grid:{millisPerLine:10000,verticalSections:20,borderVisible:false},
+                            maxValue:1.0640,
+                            minValue:1.0600}),
                         canvas = document.getElementById('smoothie-chart'),
                         series = new TimeSeries();
                 chart.streamTo(canvas, 1000);
@@ -17,8 +25,8 @@
 
                 ws = new WebSocket('ws://'+document.domain+':8889/');
                 ws.onopen = function () {document.getElementById('log').innerHTML += "WebSocket opened <br/>";};
-                ws.onmessage = function (e) {series.append(new Date().getTime(),parseFloat(e.data));};
-                ws.onclose = function () {document.getElementById('log').innerHTML += 'WebSocket closed <br/>';}
+                ws.onmessage = function (e) {series.append(new Date().getTime(),parseFloat(e.data));console.log(e);};
+                ws.onclose = function () {document.getElementById('log').innerHTML += 'WebSocket closed <br/>'; ws.send('close');}
             }
         </script>
     <button onclick="create();">Create WebSocket</button>
@@ -28,6 +36,6 @@
 
     <div id="log" style="width:300px; height: 300px; border: 1px solid #999999; overflow:auto;"></div>
 
-    <canvas id="smoothie-chart" width="625" height="425"></canvas>
+    <canvas id="smoothie-chart" width="1000" height="400"></canvas>
     </body>
 </html>
