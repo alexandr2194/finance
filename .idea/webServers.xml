@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="8ab037a0-c947-4a72-a2fc-9c1b1b9cfec9" name="finance" url="http://finance.sirendia.ru">
+        <fileTransfer host="62.109.5.36" port="21" rootFolder="/html/finance">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

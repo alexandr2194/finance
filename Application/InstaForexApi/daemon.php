@@ -24,18 +24,18 @@ $firstTimeEnd = date("Y-m-d H:i:s", strtotime('+2 hours', time()));
 
 $timeDB = new FinanceDataBase();
 $timeDB->makeQuery(
-    "INSERT INTO `financeTime` VALUES ('" . $firstTimeStart . "','" . $firstTimeEnd . "'," . $firstBid . "," . $firstAsk . ")"
+    "INSERT INTO `EURUSD` VALUES ('" . $firstTimeStart . "','" . $firstTimeEnd . "'," . $firstBid . "," . $firstAsk . ")"
 );
 
 sleep(1);//ждем секунду
 $function = function () use ($response, $timeDB) {
     $financialData = $response->sendRequest();
     $previousRow = $timeDB->getOneRow(
-        "SELECT * FROM financeTime WHERE end_time = (SELECT MAX(end_time) FROM financeTime)"
+        "SELECT * FROM EURUSD WHERE end_time = (SELECT MAX(end_time) FROM EURUSD)"
     );
     if ((floatval($previousRow['bid']) + floatval($previousRow['ask'])) != (floatval($financialData->getBid()) + floatval($financialData->getAsk()))) {
         $timeDB->makeQuery(
-            "INSERT INTO `financeTime` VALUES ('" . $previousRow['end_time'] . "','" . date("Y-m-d H:i:s", strtotime('+2 hours', time())) . "'," . $financialData->getBid() . "," . $financialData->getAsk() . ")"
+            "INSERT INTO `EURUSD` VALUES ('" . $previousRow['end_time'] . "','" . date("Y-m-d H:i:s", strtotime('+2 hours', time())) . "'," . $financialData->getBid() . "," . $financialData->getAsk() . ")"
         );
     }
 };

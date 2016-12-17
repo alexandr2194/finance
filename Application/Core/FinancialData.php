@@ -1,7 +1,12 @@
 <?php
 
-namespace Finance\Application\InstaForexApi;
+namespace Application\Core;
 
+/**
+ * Class FinancialData
+ *
+ * @package Finance\Application\Core
+ */
 class FinancialData
 {
     const DIGITS = 'digits';
@@ -16,32 +21,26 @@ class FinancialData
      * @var integer
      */
     private $digits;
-
     /**
      * @var float
      */
     private $ask;
-
     /**
      * @var float
      */
     private $bid;
-
     /**
      * @var float
      */
     private $change;
-
     /**
      * @var string
      */
     private $symbol;
-
     /**
      * @var integer
      */
     private $lastTime;
-
     /**
      * @var float
      */
@@ -49,6 +48,7 @@ class FinancialData
 
     /**
      * FinancialData constructor.
+     *
      * @param $digits
      * @param $ask
      * @param $bid
@@ -65,9 +65,7 @@ class FinancialData
         string $symbol,
         int $lastTime,
         float $change24h
-    )
-    {
-
+    ) {
         $this->digits = $digits;
         $this->ask = $ask;
         $this->bid = $bid;

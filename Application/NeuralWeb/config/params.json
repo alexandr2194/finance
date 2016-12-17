@@ -1,9 +1,9 @@
 {
   "input": {
-    "neuronCount": 4
+    "neuronCount": 144
   },
   "hidden": {
-    "neuronCount": 5
+    "neuronCount": 16
   },
   "output": {
     "neuronCount": 2

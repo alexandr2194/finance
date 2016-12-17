@@ -9,16 +9,12 @@
       "email": "alexandr2194@gmail.com"
     }
   ],
-  "require": {},
-  "autoload":
-  {
+  "require": {
+    "guzzlehttp/guzzle": "~6.0"
+  },
+  "autoload": {
     "psr-4": {
-      "Finance\\Application\\": "Application/",
-      "Finance\\Application\\InstaForexApi\\": "Application/InstaForexApi/",
-      "Finance\\Application\\NeuralWeb\\": "Application/NeuralWeb/",
-      "Finance\\Application\\DataBase\\": "Application/Database/",
-      "Finance\\Application\\Process\\": "Application/Process/",
-      "Finance\\Application\\WebSocket\\": "Application/WebSocket/"
+      "Application\\": "Application/"
     }
   }
 }
