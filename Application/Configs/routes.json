@@ -1,0 +1,92 @@
+{
+  "index": {
+    "patterns": [
+      "/"
+    ],
+    "controller": "IndexController"
+  },
+  "general": {
+    "patterns": [
+      "/general"
+    ],
+    "controller": "GeneralController"
+  },
+  "gallery": {
+    "patterns": [
+      "/gallery"
+    ],
+    "controller": "GalleryController"
+  },
+  "basic_table": {
+    "patterns": [
+      "/table"
+    ],
+    "controller": "BasicTableController"
+  },
+  "blank": {
+    "patterns": [
+      "/blank"
+    ],
+    "controller": "BlankController"
+  },
+  "buttons": {
+    "patterns": [
+      "/buttons"
+    ],
+    "controller": "ButtonsController"
+  },
+  "calendar": {
+    "patterns": [
+      "/calendar"
+    ],
+    "controller": "CalendarController"
+  },
+  "charts": {
+    "patterns": [
+      "/charts"
+    ],
+    "controller": "ChartsController"
+  },
+  "forms": {
+    "patterns": [
+      "/forms"
+    ],
+    "controller": "FormsController"
+  },
+  "lock_screen": {
+    "patterns": [
+      "/lock_screen"
+    ],
+    "controller": "LockScreenController"
+  },
+  "login": {
+    "patterns": [
+      "/login"
+    ],
+    "controller": "LoginController"
+  },
+  "morris": {
+    "patterns": [
+      "/morris"
+    ],
+    "controller": "MorrisController"
+  },
+  "panels": {
+    "patterns": [
+      "/panels"
+    ],
+    "controller": "PanelsController"
+  },
+  "responsive_table": {
+    "patterns": [
+      "/resptable"
+    ],
+    "controller": "ResponsiveTableController"
+  },
+  "todo": {
+    "patterns": [
+      "/todo"
+    ],
+    "controller": "ToDoController"
+  }
+}

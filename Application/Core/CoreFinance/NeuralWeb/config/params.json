@@ -1,0 +1,11 @@
+{
+  "input": {
+    "neuronCount": 12
+  },
+  "hidden": {
+    "neuronCount": 16
+  },
+  "output": {
+    "neuronCount": 2
+  }
+}

@@ -1,25 +1,25 @@
 <?php
-
-use Application\Core\DataBase;
-use Application\Core\PrepareResponse;
-
-require __DIR__ . '/../vendor/autoload.php';
+use Finance\Application;
 
 ini_set("display_errors", true);
 ini_set('memory_limit', '-1');
 ini_set('max_execution_time', 900);
 
+require __DIR__ . '/../vendor/autoload.php';
+
+Application::startSession();
+Application::launch($_SERVER, $_REQUEST, $_SESSION);
 
 
-
-
-$eurUsd = new PrepareResponse("#bitcoin");
-$financialData = $eurUsd->sendRequest();
-exit;
-echo "Bid: " . $financialData->getBid() . "; Ask: " . $financialData->getAsk() . "<br>";
-
-$t = DataBase::getInstance()->query("SELECT * FROM EURUSD");
-echo var_dump($t);
+/*
+$response = DataBase::getInstance()->selectQuery("SELECT COUNT(*) cnt FROM EURUSD")[0];
+echo "Count rows: " . $response['cnt'];
+$response = DataBase::getInstance()->selectQuery("SELECT max(end_time) max FROM EURUSD")[0];
+echo "<br>Max time: " . $response['max'];
+$response = DataBase::getInstance()->selectQuery("SELECT cur_bid, cur_ask FROM EURUSD WHERE end_time = (SELECT max(end_time) max FROM EURUSD)")[0];
+echo "<br>Last bid: " . $response['cur_bid'];
+echo "<br>Last ask: " . $response['cur_ask'];
+*/
 /*
 $NeuralWeb = NeuralWeb::buildNeuralWeb();
 $timeBefore = time();

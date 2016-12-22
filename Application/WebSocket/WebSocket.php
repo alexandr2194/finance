@@ -1,10 +1,10 @@
 <?php
 
-namespace Finance\Application\WebSocket;
+namespace Finance\WebSocket;
 
 
 use Exception;
-use Finance\Application\InstaForexApi\PrepareResponse;
+use Finance\Core\CoreFinance\FinancialClient;
 
 class WebSocket
 {
@@ -33,6 +33,7 @@ class WebSocket
 
     /**
      * WebSocket constructor.
+     *
      * @param string $ip
      * @param int $port
      */
@@ -55,7 +56,7 @@ class WebSocket
 
                 if (in_array($this->socket, $read)) {
                     $connect = stream_socket_accept($this->socket, -1);
-                    $this->handshake($connect);
+                    $this->handShake($connect);
                     $this->connects[] = $connect;
                     $this->onOpen($connect);
 
@@ -82,9 +83,9 @@ class WebSocket
      * @param $connect
      * @return array|bool
      */
-    private function handshake($connect)
+    private function handShake($connect)
     {
-        $info = array();
+        $info = [];
 
         $line = fgets($connect);
         $header = explode(' ', $line);
@@ -120,6 +121,7 @@ class WebSocket
             "Connection: Upgrade\r\n" .
             "Sec-WebSocket-Accept:" . $SecWebSocketAccept . "\r\n\r\n";
         fwrite($connect, $upgrade);
+
         return $info;
     }
 
@@ -131,7 +133,7 @@ class WebSocket
      */
     private function encode($payload, $type = 'text', $masked = false)
     {
-        $frameHead = array();
+        $frameHead = [];
         $payloadLength = strlen($payload);
 
         switch ($type) {
@@ -165,7 +167,7 @@ class WebSocket
             }
             // most significant bit MUST be 0
             if ($frameHead[2] > 127) {
-                return array('type' => '', 'payload' => '', 'error' => 'frame too large (1004)');
+                return ['type' => '', 'payload' => '', 'error' => 'frame too large (1004)'];
             }
         } elseif ($payloadLength > 125) {
             $payloadLengthBin = str_split(sprintf('%016b', $payloadLength), 8);
@@ -182,7 +184,7 @@ class WebSocket
         }
         if ($masked === true) {
             // generate a random mask:
-            $mask = array();
+            $mask = [];
             for ($i = 0; $i < 4; $i++) {
                 $mask[$i] = chr(rand(0, 255));
             }
@@ -206,21 +208,21 @@ class WebSocket
     private function decode($data)
     {
         $unmaskedPayload = '';
-        $decodedData = array();
+        $decodedData = [];
 
         // estimate frame type:
         $firstByteBinary = sprintf('%08b', ord($data[0]));
         $secondByteBinary = sprintf('%08b', ord($data[1]));
-        $opcode = bindec(substr($firstByteBinary, 4, 4));
+        $opCode = bindec(substr($firstByteBinary, 4, 4));
         $isMasked = ($secondByteBinary[0] == '1') ? true : false;
         $payloadLength = ord($data[1]) & 127;
 
         // unmasked frame is received:
         if (!$isMasked) {
-            return array('type' => '', 'payload' => '', 'error' => 'protocol error (1002)');
+            return ['type' => '', 'payload' => '', 'error' => 'protocol error (1002)'];
         }
 
-        switch ($opcode) {
+        switch ($opCode) {
             // text frame:
             case 1:
                 $decodedData['type'] = 'text';
@@ -241,7 +243,7 @@ class WebSocket
                 $decodedData['type'] = 'pong';
                 break;
             default:
-                return array('type' => '', 'payload' => '', 'error' => 'unknown opcode (1003)');
+                return ['type' => '', 'payload' => '', 'error' => 'unknown op code (1003)'];
         }
 
         if ($payloadLength === 126) {
@@ -297,11 +299,10 @@ class WebSocket
      */
     public function sendMessage($connect)
     {
-        $eurUsd = new prepareResponse("EURUSD");
-
-        $financialData = $eurUsd->sendRequest();
-        echo strval($financialData->getBid()) . strval(rand(0, 9));
-        fwrite($connect, $this->encode(strval($financialData->getBid()) . strval(rand(0, 9))));
+        $client = new FinancialClient("eurusd");
+        $response = $client->request();
+        echo strval($response->getBid()) . strval(rand(0, 9));
+        fwrite($connect, $this->encode(strval($response->getBid()) . strval(rand(0, 9))));
     }
 
 
@@ -312,6 +313,7 @@ class WebSocket
         ob_implicit_flush();    //Включаем вывод без буферизации
         $socket = stream_socket_server("tcp://" . $this->ip . ":" . $this->port, $errno, $errstr);
         $this->assertConnectSocketServer($socket);
+
         return $socket;
     }
 

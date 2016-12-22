@@ -1,0 +1,6 @@
+{
+  "root" : "/var/www/html/Finance/",
+  "core" : "{root}/Application",
+  "routeFile": "{core}/Configs/routes.json",
+  "logFolder": "{root}/logs"
+}

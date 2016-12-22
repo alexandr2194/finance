@@ -1,0 +1,15 @@
+{
+  "php-settings": {
+    "display_errors": true
+  },
+  "application": {
+    "root": "{root}",
+    "core": "{core}",
+    "routeFile": "{routeFile}",
+    "logFolder": "{logFolder}"
+  },
+  "template": {
+    "templateFolder": "{core}/Templates",
+    "cacheFolder": "{core}/Templates/Cache"
+  }
+}
