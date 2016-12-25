@@ -127,6 +127,4 @@ var Script = function () {
     new Chart(document.getElementById("polarArea").getContext("2d")).PolarArea(chartData);
     new Chart(document.getElementById("bar").getContext("2d")).Bar(barChartData);
     new Chart(document.getElementById("pie").getContext("2d")).Pie(pieData);
-
-
 }();

@@ -6,6 +6,7 @@ use Finance\Core\Exceptions\RouterNotFoundRouteException;
 
 /**
  * Class Router
+ *
  * @package Finance\Core
  */
 class Router
@@ -40,18 +41,19 @@ class Router
      * @return Router
      * @throws ApplicationException
      */
-    public static function getInstance():Router
+    public static function getInstance(): Router
     {
         if (static::$instance === null) {
             throw new ApplicationException("Объект 'Router' не инициализирован! ");
         }
+
         return static::$instance;
     }
 
     /**
      * @return string
      */
-    public function getUrl():string
+    public function getUrl(): string
     {
         return $this->server[self::REQUEST_URI];
     }
@@ -61,7 +63,7 @@ class Router
      * @return array
      * @throws \Exception
      */
-    public function getRoute(string $url):array
+    public function getRoute(string $url): array
     {
         $allRoutes = $this->loadAllRoutes(Config::getInstance()->getPathToRouteFile());
         foreach ($allRoutes as $route) {
@@ -70,7 +72,7 @@ class Router
                 return $resultRoute;
             }
         }
-        throw new RouterNotFoundRouteException("Unknown route for current URL!");
+        throw new RouterNotFoundRouteException("Unknown route for current URL! " . $url);
     }
 
     /**
@@ -86,6 +88,7 @@ class Router
                 return $route;
             }
         }
+
         return null;
     }
 
@@ -93,7 +96,7 @@ class Router
      * @param string $pattern
      * @return string
      */
-    private function preparePattern(string $pattern):string
+    private function preparePattern(string $pattern): string
     {
         $resultPattern = str_replace('/', '\/', $pattern);
         if (preg_match('/\*$/', $resultPattern)) {
@@ -102,6 +105,7 @@ class Router
         } else {
             $resultPattern = '/^' . $resultPattern . '$/';
         }
+
         return $resultPattern;
     }
 
@@ -109,9 +113,10 @@ class Router
      * @param string $pathToRoutesFile
      * @return array
      */
-    private function loadAllRoutes(string $pathToRoutesFile):array
+    private function loadAllRoutes(string $pathToRoutesFile): array
     {
         $this->assertExistsFile($pathToRoutesFile);
+
         return json_decode(file_get_contents($pathToRoutesFile), true);
     }
 
@@ -139,9 +144,10 @@ class Router
      * @param string $controllerName
      * @return Controller
      */
-    public function getController(string $controllerName) : Controller
+    public function getController(string $controllerName): Controller
     {
         $controllerClassName = "Finance\\Controllers\\" . $controllerName;
+
         return new $controllerClassName();
     }
 }
